@@ -1,0 +1,48 @@
+<h1>Registro de cata de vinos</h1>
+
+<%= form_with(model: @wine, local: true) do |f| %>
+    <div>
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+    </div>
+
+    <% if @strains.count > 0 %>
+        <div>
+            <%= collection_check_boxes(:wine, :strain_ids, @strains, :id, :name) %>
+        </div>
+    <% else %>
+        <h5> No hay cepas disponibles </h5>
+    <% end %>
+
+    <div>
+        <%= f.submit %>
+    </div>
+<%end%>
+
+
+<h2>Listado de vinos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Cepas</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        <% @wines.each do |wine| %>
+            <tr>
+                <td><%= wine.name %></td>
+                <td>
+                    <ul>
+                        <% wine.strains.each do |strain| %>
+                            <li><%= strain.name %></li>
+                        <% end %>
+                    </ul>
+                </td>
+            </tr>
+        <% end %>
+    </tbody>
+
+</table>
